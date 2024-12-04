@@ -1,0 +1,20 @@
+# Get the full path of the current script
+$currentScriptPath = $MyInvocation.MyCommand.Definition
+
+# Get the directory of the current script
+$scriptDirectory = Split-Path -Path $currentScriptPath
+
+# Define the new file name for the duplicate
+$newFileName = "Duplicate_" + (Get-Date -Format "yyyyMMddHHmmss") + ".ps1"
+
+# Combine directory and new file name
+$newScriptPath = Join-Path -Path $scriptDirectory -ChildPath $newFileName
+
+# Read the contents of the current script
+$scriptContent = Get-Content -Path $currentScriptPath -Raw
+
+# Write the content to the new file
+Set-Content -Path $newScriptPath -Value $scriptContent
+
+# Output confirmation message
+Write-Host "Script duplicated successfully as $newFileName in $scriptDirectory"
